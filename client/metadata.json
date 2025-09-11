@@ -1,0 +1,5 @@
+{
+  "name": "Sello AI Frontend",
+  "description": "A React-based frontend for the Sello AI chat service. It provides an interface for connecting to the service with a token and user ID, and handles interactive chat flows including recipient selection and OTP confirmation.",
+  "requestFramePermissions": []
+}
