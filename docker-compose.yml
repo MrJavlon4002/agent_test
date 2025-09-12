@@ -10,7 +10,7 @@ services:
     ports:
       - "8000:8000"
     env_file:
-      - ./back/.env
+      - ./.env
     environment:
       FRONTEND_ORIGIN: ${FRONTEND_ORIGIN:-http://localhost:5173}
       GEMINI_API_KEY: ${GEMINI_API_KEY}
