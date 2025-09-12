@@ -1,9 +1,9 @@
 // FIX: Safely access Vite environment variables with optional chaining to prevent runtime errors
-// when `import.meta.env` is not defined. Fallback to localhost for development.
+// when `import.meta.env` is not defined. Fallback to 0.0.0.0 for development.
 export const API_HTTP_BASE =
-  (import.meta as any).env?.VITE_API_HTTP_BASE || "http://localhost:8000";
+  (import.meta as any).env?.VITE_API_HTTP_BASE || "http://0.0.0.0:8000";
 export const API_WS_BASE =
-  (import.meta as any).env?.VITE_API_WS_BASE || "ws://localhost:8000";
+  (import.meta as any).env?.VITE_API_WS_BASE || "ws://0.0.0.0:8000";
 
 export async function postJSON<T>(
   url: string,
