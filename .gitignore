@@ -7,10 +7,10 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-client/node_modules
-client/dist
-client/dist-ssr
-client/*.local
+front/node_modules
+front/dist
+front/dist-ssr
+front/*.local
 
 # Editor directories and files
 .vscode/*
@@ -161,13 +161,13 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-server/.env
+back/.env
 .envrc
-server/.venv
-server/env/
-server/venv/
-server/ENV/
-server/env.bak/
+back/.venv
+back/env/
+back/venv/
+back/ENV/
+back/env.bak/
 *venv.bak/
 
 # Spyder project settings
