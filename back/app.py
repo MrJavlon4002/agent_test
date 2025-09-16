@@ -23,7 +23,7 @@ app = FastAPI(title="Sello AI backend")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[os.getenv("FRONTEND_ORIGIN", FRONTEND_ORIGIN)],
+    allow_origins=[os.getenv("FRONTEND_ORIGIN", "http://localhost:5173")],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

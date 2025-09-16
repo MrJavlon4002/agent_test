@@ -1,24 +1,33 @@
-FROM node:20-alpine AS builder
+# ./front/Dockerfile
+
+# ---------- Build stage ----------
+FROM node:20-alpine AS build
 WORKDIR /app
 
-# Install deps
+# Copy and install
 COPY package*.json ./
-RUN npm ci --no-audit --no-fund
+RUN npm ci
 
-# Build
+# Pass in API base at build time (from compose args)
+ARG VITE_API_BASE_URL=http://api:8000
+ENV VITE_API_BASE_URL=$VITE_API_BASE_URL
+
+# Copy source and build
 COPY . .
-ARG VITE_API_BASE_URL
-ENV VITE_API_BASE_URL=${VITE_API_BASE_URL}
 RUN npm run build
 
-# --- Runner ---
-FROM nginx:1.27-alpine
+# ---------- Serve stage ----------
+FROM nginx:alpine
 
-# SPA routing & gzip
+# Install curl for healthcheck
+RUN apk add --no-cache curl
+
+# Copy nginx config (you already have nginx.conf)
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Static assets
-COPY --from=builder /app/dist /usr/share/nginx/html
+# Copy built files
+COPY --from=build /app/dist /usr/share/nginx/html
 
 EXPOSE 80
-HEALTHCHECK CMD wget -q -O - http://0.0.0.0/ || exit 1
+
+CMD ["nginx", "-g", "daemon off;"]

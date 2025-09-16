@@ -1,24 +1,27 @@
-FROM python:3.12
+# ./back/Dockerfile
+FROM python:3.12-slim
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    curl \
- && rm -rf /var/lib/apt/lists/*
-
-RUN useradd -ms /bin/bash appuser
+# Install curl for healthchecks
+RUN apt-get update && apt-get install -y --no-install-recommends curl && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
-ENV PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONUNBUFFERED=1 \
-    PIP_NO_CACHE_DIR=1
+# Speed up installs
+ENV PIP_NO_CACHE_DIR=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1
 
 COPY requirements.txt .
+RUN pip install -r requirements.txt
 
-COPY app.py llm_call.py server.py payment_functions.py get_sello_details.py name_matcher.py keys.py ./
-RUN pip install --no-cache-dir -r requirements.txt
+# Copy app
+COPY . .
 
+# Expose port (internal)
 EXPOSE 8000
 
-USER appuser
-
-CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000", "--proxy-headers"]
+# If your entrypoint is server.py with uvicorn app object inside app.py, adjust accordingly.
+# Common FastAPI/uvicorn pattern:
+# - app.py defines: app = FastAPI()
+# - run with uvicorn app:app --host 0.0.0.0 --port 8000
+CMD ["sh", "-c", "uvicorn app:app --host 0.0.0.0 --port 8000"]
