@@ -11,7 +11,7 @@ services:
       - ./.env
     environment:
       # Browser origin that will hit the API during dev
-      FRONTEND_ORIGIN: ${FRONTEND_ORIGIN:-http://localhost:5173}
+      FRONTEND_ORIGIN: ${FRONTEND_ORIGIN}
       GEMINI_API_KEY: ${GEMINI_API_KEY}
       REDIS_HOST: ${REDIS_HOST:-redis}
       REDIS_PORT: ${REDIS_PORT:-6379}
@@ -33,7 +33,7 @@ services:
     container_name: sello-frontend
     restart: unless-stopped
     ports:
-      - "5173:80"
+      - "5173:5173"
     depends_on:
       api:
         condition: service_healthy

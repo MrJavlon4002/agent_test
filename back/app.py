@@ -23,6 +23,7 @@ app = FastAPI(title="Sello AI backend")
 
 app.add_middleware(
     CORSMiddleware,
+    allow_origins=[FRONTEND_ORIGIN] if FRONTEND_ORIGIN != "*" else ["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
