@@ -5,6 +5,9 @@ export const API_HTTP_BASE =
 export const API_WS_BASE =
   (import.meta as any).env?.VITE_WS_BASE_URL;
 
+console.log("API_HTTP_BASE:", API_HTTP_BASE);
+console.log("API_WS_BASE:", API_WS_BASE);
+
 export async function postJSON<T>(
   url: string,
   token: string,

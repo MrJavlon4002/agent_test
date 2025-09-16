@@ -9,8 +9,11 @@ COPY package*.json ./
 RUN npm ci
 
 # Pass in API base at build time (from compose args)
-ARG VITE_API_BASE_URL=http://api:8000
+ARG VITE_API_BASE_URL=http://localhost:8000
 ENV VITE_API_BASE_URL=$VITE_API_BASE_URL
+
+ARG VITE_WS_BASE_URL=http://localhost:8000
+ENV VITE_WS_BASE_URL=$VITE_WS_BASE_URL
 
 # Copy source and build
 COPY . .
