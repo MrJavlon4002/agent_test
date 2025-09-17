@@ -21,7 +21,7 @@ export default function App() {
   const wsUrl = useMemo(() => {
     if (!TOKEN || !wsBase) return '';
     const base = wsBase.replace(/\/+$/, "");
-    return `${base}/events?token=${encodeURIComponent(TOKEN)}`;
+    return `${base}?token=${encodeURIComponent(TOKEN)}`;
   }, [wsBase]);
 
   const connectWS = useCallback(() => {
@@ -131,7 +131,7 @@ export default function App() {
       // This ensures that the array type remains ChatMessage[] and allows concatenating a new user message without type errors.
       setHistory(prev => prev.map((msg): ChatMessage => ({ ...msg, recipientChoices: undefined }))
         .concat({ role: "user", query: `Selected recipient: ${name}`}));
-      await postJSON(`${httpBase}/api/v1/transactions/choose/${sessionId}`, TOKEN, { recipient_id: rid });
+      await postJSON(`${httpBase}/v1/transactions/choose/${sessionId}`, TOKEN, { recipient_id: rid });
     } catch(error) {
       const err = error as Error;
       console.error("[choose recipient] error", { err: err.message });
@@ -146,7 +146,7 @@ export default function App() {
       // This ensures that the array type remains ChatMessage[] and allows concatenating a new user message without type errors.
       setHistory(prev => prev.map((msg): ChatMessage => ({ ...msg, cardChoices: undefined }))
         .concat({ role: "user", query: `Selected card: ${name}`}));
-      await postJSON(`${httpBase}/api/v1/transactions/choose/${sessionId}`, TOKEN, { card_id: cid });
+      await postJSON(`${httpBase}/v1/transactions/choose/${sessionId}`, TOKEN, { card_id: cid });
     } catch(error) {
       const err = error as Error;
       console.error("[choose card] error", { err: err.message });
@@ -161,7 +161,7 @@ export default function App() {
       // This ensures that the array type remains ChatMessage[] and allows concatenating a new user message without type errors.
       setHistory(prev => prev.map((msg): ChatMessage => ({ ...msg, otpRequired: undefined }))
         .concat({ role: "user", query: `Entered OTP: ${code.replace(/./g, '*')}` }));
-      await postJSON(`${httpBase}/api/v1/transactions/${paymentId}/confirm`, TOKEN, { code });
+      await postJSON(`${httpBase}/v1/transactions/${paymentId}/confirm`, TOKEN, { code });
       setHistory(prev => [...prev, {role: "assistant", query: "OTP confirmed successfully!"}]);
     } catch (error) {
       const err = error as Error;
@@ -176,7 +176,7 @@ export default function App() {
     const newHistory: ChatMessage[] = [...history, { role: "user", query: q }];
     setHistory(newHistory);
     try {
-      const res = await postJSON<ChatResponse>(`${httpBase}/api/v1/${encodeURIComponent(USER_ID)}/chat`, TOKEN, {
+      const res = await postJSON<ChatResponse>(`${httpBase}/v1/${encodeURIComponent(USER_ID)}/chat`, TOKEN, {
         query: q,
         history
       });
