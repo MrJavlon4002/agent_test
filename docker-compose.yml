@@ -51,7 +51,7 @@ services:
     container_name: sello-ai-nginx
     restart: unless-stopped
     ports:
-      - "5173:80"   # single public entrypoint
+      - "8000:80"
     depends_on:
       - frontend
       - api
