@@ -5,13 +5,11 @@ services:
       dockerfile: Dockerfile
     container_name: sello-ai-backend
     restart: unless-stopped
-    # Keep API internal; nginx will talk to it via Docker network
     expose:
-      - "5173"
+      - "8080"
     env_file:
       - ./.env
     environment:
-      # Used by CORS in FastAPI
       FRONTEND_ORIGIN: ${FRONTEND_ORIGIN:-http://localhost}
       GEMINI_API_KEY: ${GEMINI_API_KEY}
       REDIS_HOST: ${REDIS_HOST:-redis}
@@ -19,7 +17,7 @@ services:
     depends_on:
       - redis
     healthcheck:
-      test: ["CMD", "curl", "-fsS", "http://localhost:5173/docs"]
+      test: ["CMD", "curl", "-fsS", "http://localhost:8080/docs"]
       interval: 15s
       timeout: 3s
       retries: 10
@@ -29,12 +27,10 @@ services:
       context: ./front
       dockerfile: Dockerfile
       args:
-        # Same-origin paths so browser always calls nginx
         - VITE_API_BASE_URL=/api
         - VITE_WS_BASE_URL=/events
     container_name: sello-frontend
     restart: unless-stopped
-    # Frontend listens on 80 inside its container (see front/Dockerfile below)
     expose:
       - "80"
     depends_on:
