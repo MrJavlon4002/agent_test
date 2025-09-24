@@ -199,7 +199,10 @@ async def make_transaction(recipient_name: str, amount: float, session_id: str):
 
 @mcp.tool
 async def faq_question(question: str):
-    "Answer the question about Sello Pay and its usage and services."
+    """
+    Answer the question about Sello Pay and its usage and services.
+    question: The question to be answered in Uzbek.
+    """
     resp = ask_question(question)
     return resp
 
