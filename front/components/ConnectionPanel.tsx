@@ -12,7 +12,12 @@ type Props = {
 };
 
 const StatusIndicator: React.FC<{ connected: boolean }> = ({ connected }) => (
-  <div></div>
+  <div className="flex items-center gap-2">
+    <span className={`h-2 w-2 rounded-full ${connected ? 'bg-green-400' : 'bg-red-500'}`}></span>
+    <span className={`text-sm font-semibold ${connected ? 'text-green-400' : 'text-slate-400'}`}>
+      {connected ? "Connected" : "Disconnected"}
+    </span>
+  </div>
 );
 
 export default function ConnectionPanel({ httpBase, setHttpBase, wsBase, setWsBase, connected, connectWS, disconnectWS }: Props) {
@@ -20,7 +25,7 @@ export default function ConnectionPanel({ httpBase, setHttpBase, wsBase, setWsBa
 
   return (
     <div className="flex-shrink-0 border-b border-slate-800">
-      <button 
+      <button
         className="w-full flex justify-between items-center p-4 text-left"
         onClick={() => setIsOpen(!isOpen)}
       >
@@ -34,7 +39,7 @@ export default function ConnectionPanel({ httpBase, setHttpBase, wsBase, setWsBa
         <div className="p-4 pt-0 flex flex-col gap-4">
           <div className="flex flex-col gap-1">
             <label htmlFor="httpBase" className="text-xs font-medium text-slate-400">API HTTP Base</label>
-            <input 
+            <input
               id="httpBase"
               value={httpBase}
               onChange={e => setHttpBase(e.target.value)}
@@ -43,7 +48,7 @@ export default function ConnectionPanel({ httpBase, setHttpBase, wsBase, setWsBa
           </div>
           <div className="flex flex-col gap-1">
             <label htmlFor="wsBase" className="text-xs font-medium text-slate-400">API WS Base</label>
-            <input 
+            <input
               id="wsBase"
               value={wsBase}
               onChange={e => setWsBase(e.target.value)}

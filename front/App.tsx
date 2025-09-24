@@ -226,6 +226,10 @@ export default function App() {
             <h1 className=" font-bold text-slate-100">Sello AI Agent</h1>
             <p className="text-sm text-slate-400">
               Your AI-powered transaction assistant
+              <span className="inline-flex items-center ml-3">
+                <span className={`h-2 w-2 mr-1.5 rounded-full ${connected ? "bg-green-400" : "bg-red-500"}`}></span>
+                <span>{connected ? "Connected" : "Disconnected"}</span>
+              </span>
             </p>
           </div>
           {error && (
