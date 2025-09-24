@@ -8,7 +8,7 @@ mcp_client = Client("server.py")
 
 async def llm_call(query, history, session_id: str):
     system = (
-        "You are a helpful financial assistant who speaks in Uzbek.\n"
+        "You are a helpful financial assistant who speaks in Uzbek, Russian and English. You will adapt to user language and tone.\n"
         f"SESSION_ID={session_id}\n"
         "IMPORTANT: For every MCP tool call, include the argument session_id=SESSION_ID."
     )

@@ -3,7 +3,7 @@ import logging
 from fastmcp import FastMCP
 from redis.asyncio import Redis
 
-from get_sello_details import get_card_sello, get_recipient_sello
+from info_collect import get_card_sello, get_recipient_sello, ask_question
 from payment_functions import get_recipient_sello_by_id, p2p_prepay, p2p_pay
 from name_matcher import filter_objects_by_holder
 
@@ -196,6 +196,13 @@ async def make_transaction(recipient_name: str, amount: float, session_id: str):
 
 
     return {"status": "CONFIRMED", "payment_id": payment_id, "result": pay, "receiver": chosen}
+
+@mcp.tool
+async def faq_question(question: str):
+    "Answer the question about Sello Pay and its usage and services."
+    resp = ask_question(question)
+    return resp
+
 
 if __name__ == "__main__":
     mcp.run()

@@ -45,3 +45,20 @@ def get_card_sello(*, auth_token: str, user_id: str):
     except Exception as e:
         logger.error(f"Error calling Sello API (card list): {e}")
         return {"error": str(e)}
+
+
+def ask_question(question: str) -> list | dict:
+    auth_token = "a1b2c3"
+    url = "http://localhost:8000/rag/ask_question"
+    headers = {"Accept": "application/json", "Authorization": f"Bearer {auth_token}"}
+    body = {
+        "project_id": "sello",
+        "question": question,
+    }
+    try:
+        r = requests.post(url, headers=headers, json=body, timeout=30)
+        r.raise_for_status()
+        return r.json()
+    except Exception as e:
+        logger.error(f"Error calling Sello API (ask question): {e}")
+        return {"error": str(e)}

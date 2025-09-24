@@ -1,4 +1,21 @@
 services:
+  weaviate:
+    image: cr.weaviate.io/semitechnologies/weaviate:1.28.4
+    restart: unless-stopped
+    container_name: rag_weaviate
+    ports:
+      - "8085:8080"
+      - "50051:50051"
+    volumes:
+      - weaviate_data:/var/lib/weaviate
+    environment:
+      QUERY_DEFAULTS_LIMIT: 100
+      AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED: "true"
+      PERSISTENCE_DATA_PATH: "/var/lib/weaviate"
+      CLUSTER_HOSTNAME: 'node1'
+      ENABLE_MODULES: "text2vec-voyageai"
+      VOYAGE_API_KEY: ${GEMINI_API_KEY:-"dummy-key"}
+
   api:
     build:
       context: ./back
@@ -10,14 +27,15 @@ services:
     env_file:
       - ./.env
     environment:
-      FRONTEND_ORIGIN: ${FRONTEND_ORIGIN:-http://localhost}
+      FRONTEND_ORIGIN: ${FRONTEND_ORIGIN:-http://localhost:8000}
       GEMINI_API_KEY: ${GEMINI_API_KEY}
       REDIS_HOST: ${REDIS_HOST:-redis}
       REDIS_PORT: ${REDIS_PORT:-6379}
     depends_on:
       - redis
+      - weaviate
     healthcheck:
-      test: ["CMD", "curl", "-fsS", "http://localhost:8080/docs"]
+      test: ["CMD", "curl", "-fsS", "http://localhost:8080/api/health"]
       interval: 15s
       timeout: 3s
       retries: 10
@@ -58,3 +76,6 @@ services:
     restart: unless-stopped
     ports:
       - "6379:6379"
+
+volumes:
+  weaviate_data:
