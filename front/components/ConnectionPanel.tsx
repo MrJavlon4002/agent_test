@@ -12,12 +12,7 @@ type Props = {
 };
 
 const StatusIndicator: React.FC<{ connected: boolean }> = ({ connected }) => (
-  <div className="flex items-center gap-2">
-    <span className={`h-2 w-2 rounded-full ${connected ? 'bg-green-400' : 'bg-red-500'}`}></span>
-    <span className={`text-sm font-semibold ${connected ? 'text-green-400' : 'text-slate-400'}`}>
-      {connected ? "Connected" : "Disconnected"}
-    </span>
-  </div>
+  <div></div>
 );
 
 export default function ConnectionPanel({ httpBase, setHttpBase, wsBase, setWsBase, connected, connectWS, disconnectWS }: Props) {

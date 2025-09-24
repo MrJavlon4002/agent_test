@@ -49,11 +49,15 @@ def get_card_sello(*, auth_token: str, user_id: str):
 
 def ask_question(question: str) -> list | dict:
     auth_token = "a1b2c3"
-    url = "http://localhost:8000/rag/ask_question"
-    headers = {"Accept": "application/json", "Authorization": f"Bearer {auth_token}"}
+    url = "http://api:8080/rag/ask_question"
+    headers = {
+        "accept": "application/json", 
+        "Authorization": f"Bearer {auth_token}",
+        "Content-Type": "application/json"
+    }
     body = {
         "project_id": "sello",
-        "question": question,
+        "user_question": question,
     }
     try:
         r = requests.post(url, headers=headers, json=body, timeout=30)

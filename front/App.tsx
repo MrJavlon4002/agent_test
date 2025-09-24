@@ -221,15 +221,11 @@ export default function App() {
     <main className="h-screen w-full bg-slate-900 text-slate-200 font-sans">
       <div className="flex flex-col h-full max-w-4xl mx-auto w-full">
         <header className="flex-shrink-0 flex items-center gap-4 p-4 border-b border-slate-800">
-          <div className="h-10 w-10 bg-sky-500 rounded-full flex items-center justify-center font-bold text-lg text-white">S</div>
+          <div className="h-10 w-10 bg-sky-500 rounded-full flex items-center justify-center font-bold  text-white">S</div>
           <div className="flex-1">
-            <h1 className="text-lg font-bold text-slate-100">Sello AI Agent</h1>
+            <h1 className=" font-bold text-slate-100">Sello AI Agent</h1>
             <p className="text-sm text-slate-400">
               Your AI-powered transaction assistant
-              <span className="inline-flex items-center ml-3">
-                <span className={`h-2 w-2 mr-1.5 rounded-full ${connected ? "bg-green-400" : "bg-red-500"}`}></span>
-                <span>{connected ? "Connected" : "Disconnected"}</span>
-              </span>
             </p>
           </div>
           {error && (

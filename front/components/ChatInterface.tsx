@@ -124,7 +124,7 @@ const CardChooser: React.FC<{
                 )}
               </div>
               <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                 <span className="text-white text-lg font-semibold border-2 border-white rounded-full px-6 py-2">Choose Card</span>
+                 <span className="text-white  font-semibold border-2 border-white rounded-full px-6 py-2">Choose Card</span>
               </div>
             </div>
           </div>

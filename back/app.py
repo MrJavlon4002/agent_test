@@ -28,7 +28,7 @@ except Exception:
                 return func
             return _decorator
     Limiter = _NoOpLimiter  # type: ignore
-    get_remote_address = lambda request: "0.0.0.0"  # type: ignore
+    get_remote_address = lambda request: "0.0.0.0"  
     RateLimitExceeded = Exception  # type: ignore
     def _rate_limit_exceeded_handler(request, exc):  # type: ignore
         return JSONResponse(status_code=429, content={"detail": "Rate limit exceeded"})
@@ -219,7 +219,6 @@ def _is_docs_request(request: Request) -> bool:
 
 @rag_app.middleware("http")
 async def token_check_middleware(request: Request, call_next):
-    # Allow Swagger UI & OpenAPI for the RAG sub-app
     if _is_docs_request(request):
         return await call_next(request)
     token = request.headers.get("authorization")
