@@ -36,7 +36,7 @@ except Exception:
 
 # local modules
 from llm_call import llm_call
-from rag.document_handler import DocumentHandler
+from faq.document_handler import DocumentHandler
 from keys import FRONTEND_ORIGIN
 
 # =========================================================
