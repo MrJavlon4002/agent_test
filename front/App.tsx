@@ -24,7 +24,7 @@ export default function App() {
       const cleaned = url.pathname + (sp.toString() ? `?${sp.toString()}` : "") + url.hash;
       window.history.replaceState({}, "", cleaned);
     } else {
-      setError("Missing userId or token in URL. Use ?userId=...&token=...");
+      // setError("Missing userId or token in URL. Use ?userId=...&token=...");
     }
   }, []);
 
@@ -57,7 +57,7 @@ export default function App() {
       if (!event.wasClean) {
         let userMessage = "Tarmoqda uzilish yuz berdi.";
         if (event.code === 1006) {
-          userMessage = "Tarmoqda xatolik yuz berdi.";
+          userMessage = "Tarmoqda xatolik yuz berdi. Iltimos qayta ulaning.";
         }
         setHistory(prev => [...prev, { role: "assistant", query: userMessage }]);
       }
@@ -153,10 +153,9 @@ export default function App() {
   };
 
   return (
-    <main className="h-screen w-full bg-white text-slate-900 font-sans">
-      <div className="flex flex-col h-full max-w-full sm:max-w-4xl mx-auto w-full">
+    <main className="h-screen w-screen bg-white text-slate-900 font-sans">
+      <div className="flex flex-col w-full">
         <header className="flex-shrink-0 flex items-center gap-2 sm:gap-4 p-3 sm:p-4 border-b border-slate-200 bg-slate-100">
-          {/* Logo circle */}
           <div className="h-8 w-8 sm:h-10 sm:w-10 rounded-full flex items-center justify-center font-bold text-xs sm:text-base text-white"
                style={{ backgroundColor: '#2AA8EE' }}>
             S

@@ -15,9 +15,10 @@ def get_recipient_sello(*, auth_token: str) -> list[dict] | dict:
     url = "https://pay.sello.uz/api/v1/transaction-service/p2p/recipient"
     headers = {"Accept": "application/json", "Authorization": f"Bearer {auth_token}"}
     try:
-        r = requests.get(url, headers=headers, timeout=30)
-        r.raise_for_status()
-        return r.json()
+        resp = requests.get(url, headers=headers, timeout=30)
+        resp.raise_for_status()
+        logger.info("RECIPIENTS SELLO:", resp.json())
+        return resp.json()
     except Exception as e:
         logger.error(f"Error calling Sello API (recipient list): {e}")
         return {"error": str(e)}
@@ -25,6 +26,7 @@ def get_recipient_sello(*, auth_token: str) -> list[dict] | dict:
 def get_card_sello(*, auth_token: str, user_id: str):
     url = f"https://pay.sello.uz/api/v1/dashboard/card-service/card/read-by-userId/{user_id}"
     headers = {"Content-Type": "application/json", "Authorization": f"Bearer {auth_token}"}
+    logger.info("GET CARD SELLO:", url, headers)
     try:
         r = requests.get(url, headers=headers, timeout=30)
         r.raise_for_status()
@@ -41,6 +43,7 @@ def get_card_sello(*, auth_token: str, user_id: str):
                 "currency": item["currency"]["code"],
                 "bank": item["bank"]["title"],
             })
+            print("CARD ITEM:", item)
         return cards
     except Exception as e:
         logger.error(f"Error calling Sello API (card list): {e}")

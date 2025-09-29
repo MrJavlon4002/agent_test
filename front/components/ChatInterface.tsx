@@ -257,8 +257,8 @@ export default function ChatInterface({ history, busy, onSend, onChooseRecipient
 
   return (
     <div className="flex-grow flex flex-col min-h-0 bg-white">
-      <div className="flex-grow overflow-y-auto p-3 sm:p-6">
-        <div className="flex flex-col gap-3.5 sm:gap-5">
+      <div className="flex-grow p-3 sm:p-6 h-[calc(100vh-150px)]">
+        <div className="flex flex-col gap-3.5 sm:gap-5 overflow-y-auto max-h-[calc(100vh-200px)] no-scrollbar">
           {history.map((msg, i) => (
             <div key={i} className={`flex items-end gap-2.5 sm:gap-3 ${msg.role === 'user' ? 'flex-row-reverse' : 'flex-row'}`}>
               {msg.role === 'assistant' && (
