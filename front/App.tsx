@@ -1,4 +1,5 @@
 import React, { useCallback, useMemo, useRef, useState, useEffect } from "react";
+import { Toaster, toast } from "sonner";
 import { postJSON, API_HTTP_BASE, API_WS_BASE } from "./services/api";
 import type { ChatMessage, CodeRequiredEvt, RecipientChoicesEvt, StreamEvt, CardChoicesEvt, ChatResponse } from "./types";
 import ChatInterface from "./components/ChatInterface";
@@ -115,6 +116,7 @@ export default function App() {
     if (!TOKEN || !USER_ID) {
       const msg = "Missing userId or token. Open the app with ?userId=...&token=....";
       setError(msg);
+      toast.error(msg)
       setHistory(prev => [...prev, { role: "assistant", query: msg }]);
       return false;
     }
@@ -154,11 +156,10 @@ export default function App() {
 
   return (
     <main className="h-screen w-screen bg-white text-slate-900 font-sans">
-      <div className="flex flex-col w-full">
+      <div className="flex flex-col h-full w-full oveflow-hidden">
         <header className="flex-shrink-0 flex items-center gap-2 sm:gap-4 p-3 sm:p-4 border-b border-slate-200 bg-slate-100">
-          <div className="h-8 w-8 sm:h-10 sm:w-10 rounded-full flex items-center justify-center font-bold text-xs sm:text-base text-white"
-               style={{ backgroundColor: '#2AA8EE' }}>
-            S
+          <div className="h-8 w-8 sm:h-10 sm:w-10 bg-[#2AA8EE] rounded-full flex items-center justify-center font-bold text-xs sm:text-base text-white"
+           >
           </div>
 
           {/* Title + status */}
@@ -170,9 +171,8 @@ export default function App() {
               Your AI-powered transaction assistant
               <span className="inline-flex items-center ml-2 sm:ml-3">
                 <span
-                  className={`h-1.5 w-1.5 sm:h-2 sm:w-2 mr-1 rounded-full ${
-                    connected ? "bg-emerald-500" : "bg-red-500"
-                  }`}
+                  className={`h-1.5 w-1.5 sm:h-2 sm:w-2 mr-1 rounded-full ${connected ? "bg-emerald-500" : "bg-red-500"
+                    }`}
                 ></span>
                 <span className="text-xs sm:text-sm">
                   {connected ? "Connected" : "Disconnected"}
@@ -182,22 +182,25 @@ export default function App() {
           </div>
 
           {/* Error bubble */}
-          {error && (
+          {/* {error && (
             <div className="text-[10px] sm:text-xs px-2 py-1 sm:px-3 sm:py-2 rounded bg-red-100 text-red-700 border border-red-300">
               {error}
             </div>
-          )}
+          )} */}
         </header>
+        <section className="h-[80%] bg-red-500">
+          <ChatInterface
+            history={history}
+            busy={busy}
+            onSend={sendChat}
+            onChooseRecipient={onChooseRecipient}
+            onChooseCard={onChooseCard}
+            onSubmitOtp={onSubmitOtp}
+          />
+        </section>
 
-        <ChatInterface
-          history={history}
-          busy={busy}
-          onSend={sendChat}
-          onChooseRecipient={onChooseRecipient}
-          onChooseCard={onChooseCard}
-          onSubmitOtp={onSubmitOtp}
-        />
       </div>
+       <Toaster position="top-right" richColors />
     </main>
   );
 }
