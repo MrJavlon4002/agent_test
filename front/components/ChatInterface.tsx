@@ -326,8 +326,3 @@ export default function ChatInterface({ history, busy, onSend, onChooseRecipient
     </div>
   );
 }
-
-/* Optional (global.css):
-.no-scrollbar::-webkit-scrollbar{ display:none; }
-.no-scrollbar{ -ms-overflow-style:none; scrollbar-width:none; }
-*/

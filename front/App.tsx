@@ -155,7 +155,7 @@ export default function App() {
   };
 
   return (
-    <main className="w-screen h-[calc(100vh)] bg-white text-slate-900 font-sans overflow-hidden">
+    <main className="w-screen bg-white text-slate-900 font-sans overflow-hidden">
       <div className="flex flex-col h-full w-full">
         <header className="flex-shrink-0 flex items-center gap-2 sm:gap-4 p-3 sm:p-4 border-b border-slate-200 bg-slate-100">
           <div className="h-8 w-8 sm:h-10 sm:w-10 bg-[#2AA8EE] rounded-full flex items-center justify-center font-bold text-xs sm:text-base text-white"
